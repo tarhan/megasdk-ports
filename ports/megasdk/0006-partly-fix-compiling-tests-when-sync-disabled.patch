@@ -1,0 +1,101 @@
+07e6a8ac20498c28da81cbb179b842d84ade99db
+diff --git a/tests/integration/SdkTest_test.cpp b/tests/integration/SdkTest_test.cpp
+index 122745f11..01e59982a 100644
+--- a/tests/integration/SdkTest_test.cpp
++++ b/tests/integration/SdkTest_test.cpp
+@@ -44,7 +44,9 @@ using ::mega::gfx::SocketUtils;
+ 
+ 
+ using namespace std;
++#ifdef ENABLE_SYNC
+ using sdk_test::waitForSyncState;
++#endif
+ 
+ static const string APP_KEY     = "8QxzVRxD";
+ static const string PUBLICFILE  = "file.txt";
+@@ -170,7 +172,9 @@ enum { USERALERT_ARRIVAL_MILLISEC = 1000 };
+ #include <filesystem>
+ #endif
+ 
++#ifdef ENABLE_SYNC
+ void cleanUp(::mega::MegaApi* megaApi, const fs::path &basePath);
++#endif
+ 
+ // helper functions and struct/classes
+ namespace
+@@ -1284,6 +1288,7 @@ void SdkTest::logout(unsigned int apiIndex, bool keepSyncConfigs, int timeout)
+ #ifdef ENABLE_SYNC
+     mApi[apiIndex].megaApi->logout(keepSyncConfigs, this);
+ #else
++    (void)(keepSyncConfigs);
+     mApi[apiIndex].megaApi->logout(this);
+ #endif
+     gSessionIDs[apiIndex] = "invalid";
+@@ -9250,6 +9255,8 @@ TEST_F(SdkTest, SdkBackupFolder)
+     destChildren.reset(megaApi[0]->getChildren(remoteDestNode.get()));
+     ASSERT_TRUE(destChildren && destChildren->size() == 1);
+     ASSERT_STREQ(destChildren->get(0)->getName(), backupName2);
++#else
++    (void)(deviceNameWasSetByCurrentTest);
+ #endif
+ }
+ 
+@@ -11817,8 +11824,10 @@ TEST_F(SdkTest, DISABLED_StressTestSDKInstancesOverWritableFoldersOverWritableFo
+     std::string baseFolder = "StressTestSDKInstancesOverWritableFoldersFolder";
+ 
+     unsigned numFolders = 90;
+-
++#ifdef ENABLE_SYNC
++    // Definition of cleanUp available only with ENABLE_SYNC
+     ASSERT_NO_FATAL_FAILURE(cleanUp(this->megaApi[0].get(), baseFolder));
++#endif
+ 
+     LOG_verbose << "StressTestSDKInstancesOverWritableFolders :  Creating remote folder";
+     std::unique_ptr<MegaNode> remoteRootNode(megaApi[0]->getRootNode());
+@@ -11968,7 +11977,10 @@ TEST_F(SdkTest, WritableFolderSessionResumption)
+ 
+     unsigned numFolders = 1;
+ 
++#ifdef ENABLE_SYNC
++    // Definition of cleanUp available only with ENABLE_SYNC
+     ASSERT_NO_FATAL_FAILURE(cleanUp(this->megaApi[0].get(), baseFolder));
++#endif 
+ 
+     LOG_verbose << "WritableFolderSessionResumption :  Creating remote folder";
+     std::unique_ptr<MegaNode> remoteRootNode(megaApi[0]->getRootNode());
+diff --git a/tests/integration/SdkTest_test.h b/tests/integration/SdkTest_test.h
+index a1b3f823e..6f5b118ef 100644
+--- a/tests/integration/SdkTest_test.h
++++ b/tests/integration/SdkTest_test.h
+@@ -58,6 +58,7 @@ static const unsigned int waitForSyncsMs = 4000;    // Time to wait after a sync
+  *
+  * @note: map by tag for now, should be backupId when that is available
+  */
++#ifdef ENABLE_SYNC
+ struct SyncListener: MegaListener
+ {
+     enum callbacks_t
+@@ -182,6 +183,7 @@ struct SyncListener: MegaListener
+         mRecvCbs[GlobalSyncStateChanged] = true;
+     }
+ };
++#endif
+ 
+ /**
+  * @brief The MegaListenerDeregisterer Struct
+@@ -189,6 +191,7 @@ struct SyncListener: MegaListener
+  *  - deregister on destruction (ie, whenever we exit the function - we may exit early if a test
+  * fails
+  */
++#ifdef ENABLE_SYNC
+ struct MegaListenerDeregisterer
+ {
+     MegaApi* api = nullptr;
+@@ -206,6 +209,7 @@ struct MegaListenerDeregisterer
+         api->removeListener(listener);
+     }
+ };
++#endif
+ 
+ struct TransferTracker : public ::mega::MegaTransferListener
+ {

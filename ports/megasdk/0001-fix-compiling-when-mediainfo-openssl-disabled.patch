@@ -1,0 +1,38 @@
+c7bf5feede7aac09f4988597af51870f778a3447
+diff --git a/src/megaapi_impl.cpp b/src/megaapi_impl.cpp
+index 7f906cc89..07702f407 100644
+--- a/src/megaapi_impl.cpp
++++ b/src/megaapi_impl.cpp
+@@ -1262,6 +1262,8 @@ bool MegaBackgroundMediaUploadPrivate::analyseMediaInfo(const char* inputFilepat
+         uint32_t dummykey[4];
+         mediaproperties.convertMediaPropertyFileAttributes(dummykey, api->client->mediaFileInfo);
+     }
++#else
++    (void)(inputFilepath);
+ #endif
+     return true;
+ }
+@@ -32335,6 +32337,10 @@ MegaTCPServer::MegaTCPServer(MegaApiImpl *megaApi, string basePath, bool tls, st
+     this->closing = false;
+     this->remainingcloseevents = 0;
+     this->evtrequirescleaning = false;
++#else
++    (void)(tls);
++    (void)(certificatepath);
++    (void)(keypath);
+ #endif
+     fsAccess = new MegaFileSystemAccess;
+ 
+diff --git a/src/transfer.cpp b/src/transfer.cpp
+index 16a2b70b1..d542fda7e 100644
+--- a/src/transfer.cpp
++++ b/src/transfer.cpp
+@@ -608,6 +608,8 @@ void Transfer::addAnyMissingMediaFileAttributes(Node* node, /*const*/ LocalPath&
+             }
+         }
+     }
++#else
++    (void)(localpath);
+ #endif
+ }
+ 

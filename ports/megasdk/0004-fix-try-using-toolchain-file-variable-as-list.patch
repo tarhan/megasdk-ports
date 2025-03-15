@@ -1,0 +1,16 @@
+6943d73cbab1b5d24cc18c9a9480e108d063f038
+diff --git a/cmake/modules/vcpkg_management.cmake b/cmake/modules/vcpkg_management.cmake
+index 24b22d317..d07650b82 100644
+--- a/cmake/modules/vcpkg_management.cmake
++++ b/cmake/modules/vcpkg_management.cmake
+@@ -98,7 +98,9 @@ macro(process_vcpkg_libraries overlays_path)
+         list(APPEND VCPKG_MANIFEST_FEATURES "sdk-tests")
+     endif()
+ 
+-    set(CMAKE_TOOLCHAIN_FILE ${CMAKE_TOOLCHAIN_FILE} ${VCPKG_TOOLCHAIN_PATH})
++    if(CMAKE_TOOLCHAIN_FILE STREQUAL "")
++        set(CMAKE_TOOLCHAIN_FILE ${CMAKE_TOOLCHAIN_FILE} ${VCPKG_TOOLCHAIN_PATH})
++    endif()
+     message(STATUS "Using VCPKG dependencies. VCPKG base path: ${VCPKG_ROOT} and tripplet ${VCPKG_TARGET_TRIPLET}")
+     message(STATUS "Overlay for VCPKG ports: ${VCPKG_OVERLAY_PORTS}")
+     message(STATUS "Overlay for VCPKG triplets: ${VCPKG_OVERLAY_TRIPLETS}")

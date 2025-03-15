@@ -1,0 +1,15 @@
+ad24c741698509972b34e6f62ce268264b9efaa9
+diff --git a/third_party/ccronexpr/CMakeLists.txt b/third_party/ccronexpr/CMakeLists.txt
+index bc1f1a8ae..cf7777fcd 100644
+--- a/third_party/ccronexpr/CMakeLists.txt
++++ b/third_party/ccronexpr/CMakeLists.txt
+@@ -5,7 +5,8 @@ add_library(ccronexpr STATIC
+ 
+ target_include_directories(ccronexpr SYSTEM
+     PUBLIC
+-    ${CMAKE_CURRENT_SOURCE_DIR}
++        $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
++        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+ )
+ 
+ if(ENABLE_JAVA_BINDINGS)

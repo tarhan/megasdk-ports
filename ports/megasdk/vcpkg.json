@@ -1,0 +1,185 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "megasdk",
+  "version": "8.6.0",
+  "homepage": "https://github.com/meganz/sdk",
+  "dependencies": [
+    {
+      "name": "cryptopp",
+      "version>=": "8.9.0"
+    },
+    {
+      "name": "curl",
+      "version>=": "8.6.0"
+    },
+    "icu",
+    "libsodium",
+    {
+      "name": "sqlite3",
+      "version>=": "3.46.0#1"
+    },
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ],
+  "default-features": [
+    {
+      "name": "enable-chat",
+      "platform": "android | ios"
+    },
+    {
+      "name": "enable-isolated-gfx",
+      "platform": "!(android | ios)"
+    },
+    {
+      "name": "enable-sync",
+      "platform": "!ios"
+    },
+    {
+      "name": "java",
+      "platform": "android"
+    },
+    {
+      "name": "use-cares",
+      "platform": "!ios"
+    },
+    {
+      "name": "use-ffmpeg",
+      "platform": "!(android | ios)"
+    },
+    {
+      "name": "use-freeimage",
+      "platform": "!(android | ios)"
+    },
+    {
+      "name": "use-libuv",
+      "platform": "android | ios"
+    },
+    {
+      "name": "use-mediainfo",
+      "platform": "!(android | ios)"
+    },
+    {
+      "name": "use-openssl",
+      "platform": "!osx"
+    },
+    {
+      "name": "use-pdfium",
+      "platform": "!(android | ios)"
+    },
+    {
+      "name": "use-readline",
+      "platform": "!(windows | android | ios)"
+    }
+  ],
+  "features": {
+    "enable-chat": {
+      "description": "Turns on chat management functionality"
+    },
+    "enable-drive-notifications": {
+      "description": "Allows to monitor (external) drives being [dis]connected to the computer"
+    },
+    "enable-isolated-gfx": {
+      "description": "Turns on isolated GFX processor"
+    },
+    "enable-sync": {
+      "description": "Turns on sync functionality"
+    },
+    "java": {
+      "description": "Enable the target to build the Java Bindings"
+    },
+    "log-performance": {
+      "description": "Faster log message generation"
+    },
+    "qt": {
+      "description": "Enable the target to build the Qt Bindings"
+    },
+    "sdk-tests": {
+      "description": "gtests library for the integration and unit tests",
+      "dependencies": [
+        "gtest"
+      ]
+    },
+    "use-cares": {
+      "description": "If set, the SDK will manage DNS lookups and ipv4/ipv6 itself, using the c-ares library.  Otherwise we rely on cURL",
+      "dependencies": [
+        "c-ares"
+      ]
+    },
+    "use-ffmpeg": {
+      "description": "Used to create previews/thumbnails for video files",
+      "dependencies": [
+        {
+          "name": "ffmpeg",
+          "default-features": false,
+          "features": [
+            "avcodec",
+            "avformat",
+            "swresample",
+            "swscale"
+          ],
+          "version>=": "5.1.2#10"
+        }
+      ]
+    },
+    "use-freeimage": {
+      "description": "Used to create previews/thumbnails for photos/pictures",
+      "dependencies": [
+        {
+          "name": "freeimage",
+          "version>=": "3.18.0#27"
+        },
+        {
+          "name": "jasper",
+          "default-features": false
+        },
+        {
+          "name": "tiff",
+          "version>=": "4.7.0"
+        }
+      ]
+    },
+    "use-libuv": {
+      "description": "Includes the library and turns on internal web and ftp server functionality",
+      "dependencies": [
+        "libuv"
+      ]
+    },
+    "use-mediainfo": {
+      "description": "Used to determine media properties and set those as node attributes",
+      "dependencies": [
+        "libmediainfo"
+      ]
+    },
+    "use-openssl": {
+      "description": "Use the OpenSSL library or a compatible one",
+      "dependencies": [
+        "openssl"
+      ]
+    },
+    "use-pdfium": {
+      "description": "Used to create previews/thumbnails for PDF files",
+      "dependencies": [
+        "pdfium"
+      ]
+    },
+    "use-readline": {
+      "description": "Use the readline library for the console",
+      "supports": "!windows",
+      "dependencies": [
+        "readline"
+      ]
+    }
+  },
+  "overrides": [
+    {
+      "name": "libuv",
+      "version": "1.44.2"
+    }
+  ]
+}

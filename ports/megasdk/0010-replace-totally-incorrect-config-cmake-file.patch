@@ -1,0 +1,43 @@
+df88d94c8c5407f5e35d48293fac78f4ecff435e
+diff --git a/cmake/modules/Config.cmake.in b/cmake/modules/Config.cmake.in
+index c34b13fef..7659697d4 100644
+--- a/cmake/modules/Config.cmake.in
++++ b/cmake/modules/Config.cmake.in
+@@ -2,6 +2,35 @@
+ 
+ include(CMakeFindDependencyMacro)
+ 
+-include(${CMAKE_CURRENT_LIST_DIR}/sdklibTargets.cmake)
++find_dependency(cryptopp)
++find_dependency(unofficial-sqlite3)
++find_dependency(unofficial-sodium)
++find_dependency(CURL)
++find_package(ICU COMPONENTS uc data REQUIRED)
+ 
+-check_required_components(SDKlib)
++if("@USE_READLINE@")
++    find_dependency(Readline-unix)
++endif()
++
++if("@USE_MEDIAINFO@")
++    find_dependency(ZenLib)
++    find_dependency(MediaInfoLib)
++endif()
++
++if("@USE_FFMPEG@")
++    find_dependency(FFMPEG)
++endif()
++
++if("@USE_FREEIMAGE@")
++    find_dependency(FreeImage)
++endif()
++
++if("@USE_PDFIUM@")
++    find_dependency(pdfium)
++endif()
++
++if("@USE_LIBUV@")
++    find_dependency(libuv)
++endif()
++
++include ("${CMAKE_CURRENT_LIST_DIR}/megasdk-targets.cmake")

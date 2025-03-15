@@ -1,0 +1,116 @@
+70ff6784f59135b6a93f8ddee517a38178696ce9
+diff --git a/bindings/qt/CMakeLists.txt b/bindings/qt/CMakeLists.txt
+index d8abdee13..17836a2e7 100644
+--- a/bindings/qt/CMakeLists.txt
++++ b/bindings/qt/CMakeLists.txt
+@@ -2,7 +2,10 @@ add_library(SDKQtBindings)
+ add_library(MEGA::SDKQtBindings ALIAS SDKQtBindings)
+ 
+ target_sources(SDKQtBindings
+-    PRIVATE
++    PUBLIC
++    FILE_SET public_headers
++    TYPE HEADERS
++    FILES
+     QTMegaEvent.h
+     QTMegaGlobalListener.h
+     QTMegaListener.h
+@@ -10,6 +13,7 @@ target_sources(SDKQtBindings
+     QTMegaTransferListener.h
+     QTMegaApiManager.h
+ 
++    PRIVATE
+     QTMegaEvent.cpp
+     QTMegaGlobalListener.cpp
+     QTMegaListener.cpp
+@@ -50,3 +54,13 @@ if(ENABLE_CHATLIB_WERROR)
+                                  -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
+     )
+ endif()
++
++install(
++    TARGETS SDKQtBindings
++    EXPORT megasdk-targets 
++    FILE_SET public_headers
++    LIBRARY DESTINATION lib
++    ARCHIVE DESTINATION lib
++    RUNTIME DESTINATION bin
++    INCLUDES DESTINATION include
++)
+diff --git a/cmake/modules/sdklib_target.cmake b/cmake/modules/sdklib_target.cmake
+index 110542da1..9a2eb5455 100644
+--- a/cmake/modules/sdklib_target.cmake
++++ b/cmake/modules/sdklib_target.cmake
+@@ -454,3 +454,36 @@ configure_file(
+     cmake/modules/sdklib.pc.in
+     ${CMAKE_CURRENT_BINARY_DIR}/sdklib.pc @ONLY
+     )
++
++install(
++    TARGETS SDKlib
++    EXPORT megasdk-targets 
++    DESTINATION lib
++    LIBRARY DESTINATION lib
++    ARCHIVE DESTINATION lib
++    RUNTIME DESTINATION bin
++    INCLUDES DESTINATION include
++    )
++install(
++    FILES
++        ${SDKLIB_PUB_HEADERS}
++    DESTINATION include
++    )
++install(EXPORT megasdk-targets
++    NAMESPACE MEGA::
++    FILE megasdk-targets.cmake
++    DESTINATION lib/cmake/megasdk
++    )
++
++include(CMakePackageConfigHelpers)
++
++configure_package_config_file(
++    ${CMAKE_CURRENT_LIST_DIR}/Config.cmake.in 
++    "${CMAKE_CURRENT_BINARY_DIR}/megasdk-config.cmake" 
++    INSTALL_DESTINATION lib/cmake/megasdk
++    )
++
++install(
++    FILES ${CMAKE_CURRENT_BINARY_DIR}/megasdk-config.cmake 
++    DESTINATION lib/cmake/megasdk
++    )
+diff --git a/third_party/ccronexpr/CMakeLists.txt b/third_party/ccronexpr/CMakeLists.txt
+index cf7777fcd..4bf00a44e 100644
+--- a/third_party/ccronexpr/CMakeLists.txt
++++ b/third_party/ccronexpr/CMakeLists.txt
+@@ -14,3 +14,13 @@ if(ENABLE_JAVA_BINDINGS)
+         POSITION_INDEPENDENT_CODE ON
+     )
+ endif()
++
++install(
++    TARGETS ccronexpr
++    EXPORT megasdk-targets 
++    DESTINATION lib
++    LIBRARY DESTINATION lib
++    ARCHIVE DESTINATION lib
++    RUNTIME DESTINATION bin
++    INCLUDES DESTINATION include
++)
+diff --git a/tools/gfxworker/CMakeLists.txt b/tools/gfxworker/CMakeLists.txt
+index 9e825b38d..3cdcd00d9 100644
+--- a/tools/gfxworker/CMakeLists.txt
++++ b/tools/gfxworker/CMakeLists.txt
+@@ -91,3 +91,13 @@ endif()
+ if(ENABLE_SDKLIB_TESTS)
+     add_subdirectory(tests/integration)
+ endif()
++
++install(
++    TARGETS gfxworker
++    EXPORT megasdk-targets 
++    DESTINATION bin
++    LIBRARY DESTINATION lib
++    ARCHIVE DESTINATION lib
++    RUNTIME DESTINATION bin
++)
++

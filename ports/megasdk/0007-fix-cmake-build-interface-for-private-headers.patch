@@ -1,0 +1,18 @@
+99aba472dad3a87e2ed0599c36012f76adb8dad2
+diff --git a/cmake/modules/sdklib_target.cmake b/cmake/modules/sdklib_target.cmake
+index 227e17590..110542da1 100644
+--- a/cmake/modules/sdklib_target.cmake
++++ b/cmake/modules/sdklib_target.cmake
+@@ -317,9 +317,9 @@ target_include_directories(SDKlib
+         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> # For the external projects.
+ #    PRIVATE # TODO: Private for SDK core
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+-        $<$<BOOL:${APPLE}>:${CMAKE_CURRENT_SOURCE_DIR}/include/mega/osx>
+-        $<$<BOOL:${WIN32}>:${CMAKE_CURRENT_SOURCE_DIR}/include/mega/win32>
+-        $<$<BOOL:${UNIX}>:${CMAKE_CURRENT_SOURCE_DIR}/include/mega/posix>
++        $<BUILD_INTERFACE:$<$<BOOL:${APPLE}>:${CMAKE_CURRENT_SOURCE_DIR}/include/mega/osx>>
++        $<BUILD_INTERFACE:$<$<BOOL:${WIN32}>:${CMAKE_CURRENT_SOURCE_DIR}/include/mega/win32>>
++        $<BUILD_INTERFACE:$<$<BOOL:${UNIX}>:${CMAKE_CURRENT_SOURCE_DIR}/include/mega/posix>>
+     )
+ 
+ if (WIN32)

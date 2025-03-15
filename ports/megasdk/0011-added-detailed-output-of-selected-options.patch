@@ -1,0 +1,26 @@
+e60220ed5fcef72b24d597bff187089349fa3110
+diff --git a/cmake/modules/sdklib_options.cmake b/cmake/modules/sdklib_options.cmake
+index b7d920e6f..b5d759f8b 100644
+--- a/cmake/modules/sdklib_options.cmake
++++ b/cmake/modules/sdklib_options.cmake
+@@ -46,3 +46,20 @@ if (USE_FREEIMAGE)
+ else()
+     option(ENABLE_ISOLATED_GFX "Turns on isolated GFX processor" OFF)
+ endif()
++
++message(STATUS "Option ENABLE_SYNC: ${ENABLE_SYNC}")
++message(STATUS "Option ENABLE_CHAT: ${ENABLE_CHAT}")
++message(STATUS "Option USE_MEDIAINFO: ${USE_MEDIAINFO}")
++message(STATUS "Option USE_FREEIMAGE: ${USE_FREEIMAGE}")
++message(STATUS "Option USE_FFMPEG: ${USE_FFMPEG}")
++message(STATUS "Option USE_LIBUV: ${USE_LIBUV}")
++message(STATUS "Option USE_PDFIUM: ${USE_PDFIUM}")
++message(STATUS "Option USE_C_ARES: ${USE_C_ARES}")
++message(STATUS "Option USE_READLINE: ${USE_READLINE}")
++message(STATUS "Option USE_OPENSSL: ${USE_OPENSSL}")
++message(STATUS "Option USE_OPENSSL: ${USE_OPENSSL}")
++message(STATUS "Option ENABLE_JAVA_BINDINGS: ${ENABLE_JAVA_BINDINGS}")
++message(STATUS "Option ENABLE_LOG_PERFORMANCE: ${ENABLE_LOG_PERFORMANCE}")
++message(STATUS "Option ENABLE_DRIVE_NOTIFICATIONS: ${ENABLE_DRIVE_NOTIFICATIONS}")
++message(STATUS "Option ENABLE_QT_BINDINGS: ${ENABLE_QT_BINDINGS}")
++message(STATUS "Option ENABLE_ISOLATED_GFX: ${ENABLE_ISOLATED_GFX}")

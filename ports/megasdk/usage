@@ -1,0 +1,6 @@
+find_package(megasdk CONFIG REQUIRED)
+target_link_libraries(main PRIVATE MEGA::SDKlib)
+
+# For using Qt bindings link as:
+
+target_link_libraries(main PRIVATE MEGA::SDKQtBindings)
