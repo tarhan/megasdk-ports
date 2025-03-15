@@ -1,0 +1,24 @@
+{
+  "default": {
+    "ffmpeg": {
+      "baseline": "5.1.2",
+      "port-version": 10
+    },
+    "jxrlib": {
+      "baseline": "2019.10.9",
+      "port-version": 6
+    },
+    "libraw": {
+      "baseline": "0.21.1",
+      "port-version": 2
+    },
+    "pdfium": {
+      "baseline": "5247",
+      "port-version": 1
+    },
+    "readline-unix": {
+      "baseline": "8.2",
+      "port-version": 1
+    }
+  }
+}

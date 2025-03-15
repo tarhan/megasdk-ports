@@ -31,3 +31,17 @@ git commit -m "Copied ports from MegaSDK v8.6.0"
 ```
 
 Now the `vcpkg x-add-version` command can use the port hashes to register the port versions.
+
+## Registering ports in the registry
+
+```sh
+vcpkg --x-builtin-ports-root=./ports --x-builtin-registry-versions-dir=./versions x-add-version ffmpeg --verbose --skip-version-format-check
+vcpkg --x-builtin-ports-root=./ports --x-builtin-registry-versions-dir=./versions x-add-version jxrlib --verbose --skip-version-format-check
+vcpkg --x-builtin-ports-root=./ports --x-builtin-registry-versions-dir=./versions x-add-version libraw --verbose --skip-version-format-check
+vcpkg --x-builtin-ports-root=./ports --x-builtin-registry-versions-dir=./versions x-add-version pdfium --verbose --skip-version-format-check
+vcpkg --x-builtin-ports-root=./ports --x-builtin-registry-versions-dir=./versions x-add-version readline-unix --verbose --skip-version-format-check
+git add versions
+git commit -m "Registered ports from MegaSDK"
+```
+
+Skipping the port version check is necessary because this registry does not have, for example, 10 versions of the `ffmpeg` port.
